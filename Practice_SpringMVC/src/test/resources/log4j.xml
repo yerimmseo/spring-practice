@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- Appenders -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="file_appender" class="org.apache.log4j.FileAppender">
+		<param name="file" value="./note/log/mylog.html"/>
+		<layout class="org.apache.log4j.HTMLLayout">
+		</layout>
+	</appender>
+	
+	<appender name="rock_log" class="org.apache.log4j.FileAppender">
+		<param name="file" value="./note/log/gamelog.log"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
+		</layout>
+	</appender>
+	
+	<!--
+		1. PatternLayout의 서식문자 정리
+		- %d : 로그의 기록시간을 출력한다.
+		- %p : debug, info, warn, error, fatal 등의 로깅의 레벨을 출력한다.  
+		- %F : 로깅이 발생한 프로그램의 파일명을 출력한다.
+		- %M : 로깅이 발생한 메서드의 이름을 출력한다.
+		- %l : 로깅이 발생한 호출지의 정보를 출력한다.
+		- %L : 로깅이 발생한 호출지의 라인수를 출력한다.
+		- %t : 로깅이 발생된 Thread명을 출력한다.  
+		- %c : 로깅이 발생한 카테고리를 출력한다.
+		- %C : 로깅이 발생한 클래스명을 출력한다.
+		- %m : 로그 메세지를 출력한다.
+		- %n : 개행 문자를 출력한다.  
+		- %% : %를 출력  
+		- %r : 어플리케이션 시작 이후 부터 로깅이 발생한 시점의 시간을 출력한다.(milliseconds)
+		- %x : 로깅이 발생한 Thread와 관련된 NDC(Nested Diagnostic Context)를 출력한다.
+		- %X : 로깅이 발생한 Thread와 관련된 MDC(Mapped Diagnostic Context)를 출력한다.
+		
+		2. PatternLayout을 이용한 RollingFileAppender 생성하고 사용해보기
+		※ RollingFileAppender
+		파일 하나에 모든 로그를 기록하면 파일이 너무 커지기 때문에 
+		일정 크기 이상이 되면 다음 파일로 옮겨서 저장하는 방식의 FileAppender
+		
+		3. PatternLayout을 이용한 DailyRollingFileAppender 생성하고 사용해보기
+		※ DailyRollingFileAppender
+		매일 새로운 파일에 로그를 기록하는 FileAppender
+	 -->
+	 
+	<!-- RollingFileAppender -->
+	<appender name="rolling_appender" class="org.apache.log4j.RollingFileAppender">
+    	<param name="file" value="./note/log/rollingappender/rolling.log" />
+    	<param name="MaxFileSize" value="5KB" />
+    	<param name="MaxBackupIndex" value="10" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n" />
+        </layout>
+	</appender>
+	
+	<!-- DailyRollingFileAppender  -->
+	<appender name="daily_rolling_appender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="INFO"/>
+        <param name="file" value="./note/log/dailyrollingappender/rolling.log" />
+        <param name="Append" value="true"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%t] %d{HH:mm:ss,SSS} %-5p %l - %m%n" />         
+        </layout>
+    </appender>
+	
+	<!-- Application Loggers -->
+	<logger name="com.kgitbank.practice">
+		<level value="info" />
+	</logger>
+	
+	<!-- 3rdparty Loggers -->
+	<logger name="org.springframework.core">
+		<level value="info" />
+	</logger>	
+	
+	<logger name="org.springframework.beans">
+		<level value="info" />
+	</logger>
+	
+	<logger name="org.springframework.context">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.springframework.web">
+		<level value="info" />
+	</logger>
+	
+	<logger name="com.kgitbank.model">
+		<level value="all" />
+		<appender-ref ref="file_appender"/>
+	</logger>
+	
+	<logger name="com.kgitbank.service.RockPaperScissorTest">
+		<level value="info" />
+		<appender-ref ref="rock_log"/>
+	</logger>
+	
+	<logger name="com.kgitbank.service.Log4jRollingTest">
+		<level value="info" />
+		<appender-ref ref="rolling_appender"/>
+		<appender-ref ref="daily_rolling_appender"/>
+	</logger>
+
+	<!-- Root Logger : 개별 설정이 존재하지 않는 로거들이 모두 사용하는 설정 -->
+	<root>
+		<priority value="info" />
+		<appender-ref ref="console" />
+	</root>
+	
+</log4j:configuration>
