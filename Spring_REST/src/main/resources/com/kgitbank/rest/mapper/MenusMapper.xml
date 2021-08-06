@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kgitbank.rest.mapper.MenusMapper">
+
+	<!-- 조회 -->
+	<select id="getMenusList" resultType="com.kgitbank.rest.model.Menus">
+		SELECT * FROM menus
+	</select>
+	<!-- 추가 -->
+	<insert id="insertMenu">
+		INSERT INTO menus VALUES(#{cname}, #{price}, #{group_id})
+	</insert>
+	<!-- 수정 -->
+	<update id="updateMenu">
+		UPDATE menus SET price=#{price}, group_id=#{group_id} WHERE cname=#{cname}
+	</update>
+	<!-- 삭제 -->
+	<delete id="deleteMenu">
+		DELETE FROM menus WHERE cname=#{cname}
+	</delete>
+
+</mapper>
