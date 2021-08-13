@@ -14,7 +14,7 @@
 # 웹 프로젝트 계층 구조에 따른 클래스 이름 규칙
 - 컨트롤러 클래스: xxxController
 - 비즈니스 로직 클래스: xxxService (인터페이스), xxxServiceImpl (인터페이스 구현체)
-- 데이터 접근 클래스: xxxDAO, xxxRepository, xxxMaper (DB와의 통신을 담당하는 코드) 
+- 데이터 접근 클래스: xxxDAO, xxxRepository, xxxMapper (DB와의 통신을 담당하는 코드) 
 - 데이터 클래스 (모델): xxxVO, xxxDTO
 
 # 패키지 이름 규칙
